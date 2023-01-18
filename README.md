@@ -3,8 +3,8 @@
 1) Set up 5 instances
       4 instances - Redhat-webserver and nfs
       1 instance-Ubuntu-DB
-2)Attach 3 ebs volumes to nfs
-3)Set up nfs
+2) Attach 3 ebs volumes to nfs
+3) Set up nfs
       * login via ssh from the terminal
       * create partitions on the disks you've attached
       * install lvm2
@@ -26,12 +26,12 @@
       * Change inbound rules to the above shown port address by allowing access to subnet CIDR address.
       
 
-4)On DB server:
+4) On DB server:
       * SSH on DB server via the terminal
       * Install mysql-server
       * start mysql using the command "sudo mysql"
       * Create a database named 'tooling' using the command : create database tooling;
-      * create user using the command: create user 'webaccess'@'172.31.16.0/20' identified by                     'password';
+      * create user using the command: create user 'webaccess'@'172.31.16.0/20' identified by 'password';
       * grant privileges using the following commands:
             grant all privileges on tooling.* to 'webaccess'@'172.31.16.0/20';
             flush privileges;
