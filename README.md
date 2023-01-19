@@ -10,7 +10,7 @@
       * install lvm2
       * create pv to be used by lvm
       * package all of pv to one volume group
-      * create logical volumes lv-apps, lv-logs, lv- using the command "sudo lvcreate -n lv-apps -L 9G            webdata-vg"
+      * create logical volumes lv-apps, lv-logs, lv-opt using the command "sudo lvcreate -n lv-apps -L 9G            webdata-vg"
       * format the disks as xfs instead of ext4 using the command "sudo mkfs -t xfs /dev/webdata-vg/lv-           opt"
       * create /mnt/apps, /mnt/logs, /mnt/opt directories and mount /dev/webdata-vg/lv-apps,           /dev/webdata-vg/lv-logs and /dev/webdata-vg/lv-opt on them respectively using the command "sudo mount /dev/webdata-vg/lv-apps /mnt/apps"
       * install nfs server
