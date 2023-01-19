@@ -35,6 +35,26 @@
       * grant privileges using the following commands:
             grant all privileges on tooling.* to 'webaccess'@'172.31.16.0/20';
             flush privileges;
+      * change the bind-address to 0.0.0.0 (open this to change the bind-address: sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf)
+      * Make changes in security group to mysql-aurora and enable connection with all network interfaces(0.0.0.0/0)
+
  
  
  5) Now ssh to webserver1 via the terminal
+      * Install nfs client using the command "sudo yum install nfs-utils nfs4-acl-tools -y"
+      * Mount /var/www and target nfs server's export for apps using the command "sudo mount -t nfs -o rw,nosuid 172.31.23.165:/mnt/apps /var/www"
+      * Create touch.md file in /var/www path and then check on nfs server in the path /mnt/apps to see if touch.md file exists. An image of this verification is shown below(boxed in blue).
+      * Open /etc/fstab and add the line "172.31.23.165:/mnt/apps /var/www nfs defaults 0 0". This is shown below(boxed in blue)
+      * Install apache: "sudo yum install httpd -y"
+      * Verify if apache is on /var/www in webserver. It should also be available on /mnt/apps on nfs server.
+      * Locate the log files for apache(/var/log - you should find httpd file here) and mount it on nfs server's export for log using the command "sudo mount -t nfs -o rw,nosuid 172.31.23.165:/mnt/logs /var/log/httpd". Add another line in /etc/fstab.
+      * Next fork the code from https://github.com/darey-io/tooling . (Install git using the command "sudo yum install git" if its not previously installed on webserver. )
+      * Change to 'tooling' directory
+      * Ensure that html folder from repository is deployed to /var/www/html . (sudo cp -R html/. /var/www/html)
+      * Try to access webpage using public ip of webserver1. If it cannot be accesse then diable the selinux using the commands:sudo setenforce 0
+ sudo vi /etc/sysconfig/selinux   (Here change to SELINUX=disabled)  
+      * Now open functions.php file(sudo vi /var/www/html/functions.php) and make the following changes (as shown in the blue box).
+      * Install mysql on webserver
+      * Apply tooling.db.sql script. First connect to the db server via web server using the command: msql -h 172.31.27.131 -u webaccess -p tooling < tooling-db.sql
+      * Move Redhat test page and reload the webpage. sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.backup
+      * restart apache(sudo systemctl restart httpd). Then refresh the webpage. It should load the login page to your website as shown below.
